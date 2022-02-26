@@ -1,0 +1,36 @@
+<!doctype html>
+{% include 'base.html' %}
+
+{% block title %}
+
+    <title> {{ title }} </title>
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <h1>Homepage</h1>
+
+        <h3>Cart ID: {{ cart.cart_id }}</h3>
+        <div class="row bg-warning">
+
+            {% for p in prod %}
+            <div class="col-3">
+                <div class="card" style="width: 18rem; margin-top:1rem;">
+                    <img src="{{ p.prod_image.url }}" class="card-img-top" alt="Product Image"
+                         style="width:15rem; height:20rem;">
+                    <div class="card-body">
+                        <h3 class="card-title"> {{ p.prod_name }} </h3>
+                        <h5 class="card-title text-danger"> BDT {{ p.prod_price }} </h5>
+                        <p class="card-text"> {{ p.prod_desc | truncatechars:150 }} </p>
+                        <a href="{% url 'homeApplication:prodDetail' p.id cart.cart_id  %}" class="btn btn-primary">View Detail {{ p.id }}</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+
+{% endblock %}

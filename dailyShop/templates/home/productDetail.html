@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+{% include 'base.html' %}
+
+
+{% block content %}
+
+
+<h1> Product Detail Page </h1>
+<h1> Product Id: {{ prod.pk }} </h1>
+<h1> Product Name: {{ prod.prod_name }} </h1>
+<h1> Product Price: {{ prod.prod_price }} </h1>
+<h1> Product Description: {{ prod.prod_desc }} </h1>
+
+<img src="{{ prod.prod_image.url }}" alt="Product Image">
+
+<div class="container" style="margin-bottom:10rem;">
+    <div class="row">
+        <div class="col bg-warning">
+            <form action="{% url 'cartOrderApp:addToCart' %}" method="POST">
+                {% csrf_token %}
+                <h1>Product Cart Form</h1>
+                <div class="mb-3">
+                    <label for="prod_id" class="form-label">Product ID</label>
+                    <input type="text" class="form-control" id="prod_id" name="prod_id" value="{{ prod.pk }}">
+                </div>
+                <div class="mb-3">
+                    <label for="cart_id" class="form-label">Cart ID</label>
+                    <input type="text" class="form-control" id="cart_id" name="cart_id" value="{{ cart.cart_id }}">
+                </div>
+                <div class="mb-3">
+                    <label for="prod_quantity" class="form-label">Quantity</label>
+                    <input type="number" class="form-control" id="prod_quantity" name="prod_quantity" min="1" max="10" value="1">
+                </div>
+                <button type="submit" class="btn btn-primary">Add to cart</button>
+            </form>
+        </div>
+        <div class="col bg-info">Empty</div>
+    </div>
+</div>
+
+
+{% endblock %}

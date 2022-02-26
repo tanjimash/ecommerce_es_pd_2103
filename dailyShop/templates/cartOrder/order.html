@@ -1,0 +1,81 @@
+<!doctype html>
+{% include 'base.html' %}
+
+{% block title %}
+
+    <title> {{ title }} </title>
+
+{% endblock %}
+
+
+
+{% block content %}
+
+    <h1>Order Page</h1>
+
+    <h3>Order ID: {{ order.order_id }} </h3>
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-3 bg-secondary">asd</div>
+            <div class="col-6 bg-danger">
+
+                <table class="table">
+                    <tbody>
+                        {% for cit in cartItems %}
+                        <tr>
+                            <td class="container">
+                                <div class="row">
+                                    <div class="col">
+                                        <img src="{{ cit.product.prod_image.url }}" alt="prod-img" style="width:10rem; height:10rem">
+                                    </div>
+                                    <div class="col"> <b>{{ cit.product.prod_name }}</b>
+                                        {{ cit.cartItem_id }}
+                                    </div>
+                                    <div class="col"> <b>{{ cit.product.prod_price }}</b> </div>
+                                    <div class="col"> <b>{{ cit.cartItem_quantity }}</b> </div>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+
+            </div>
+            <div class="col bg-info">
+                <h3>Select a payment method</h3>
+
+                <h4> Order Price: {{ order.price }} </h4>
+
+                <div class="row">
+                    <div class="col">
+                        <a href="{% url 'cartOrderApp:order_cancel' order.order_id %}"
+                            class="btn btn-danger"> <b>Cancel Order</b> </a>
+                    </div>
+                </div>
+                <div class="row mt-5">
+                    <div class="col">
+                        <form action="{% url 'cartOrderApp:placeOrder_cod' order.order_id %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="cod" value="COD">
+                            <button type="submit" class="btn btn-md btn-dark"> <b>COD</b> </button>
+                        </form>
+                    </div>
+                    <div class="col">
+                        <form action="{% url 'cartOrderApp:placeOrder_sslcommerz' order.order_id %}" method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" name="cod" value="SSLCommerz">
+                            <button type="submit" class="btn btn-md btn-dark"> <b>SSLCommerz</b> </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+{% endblock %}

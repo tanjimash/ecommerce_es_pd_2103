@@ -1,0 +1,99 @@
+<!doctype html>
+{% include 'base.html' %}
+
+{% block title %}
+
+    <title> {{ title }} </title>
+
+{% endblock %}
+
+
+
+{% block content %}
+
+    <h1>Cart</h1>
+
+<!--    <table class="table">-->
+<!--        <thead>-->
+<!--            <tr>-->
+<!--                <th scope="col">#</th>-->
+<!--                <th scope="col">Cart Item ID</th>-->
+<!--                <th scope="col">Cart</th>-->
+<!--                <th scope="col">Product</th>-->
+<!--                <th scope="col">Cart Item Quantity</th>-->
+<!--                <th scope="col">Cart Item Price</th>-->
+<!--            </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--            {% for cit in cartItems %}-->
+<!--            <tr>-->
+<!--                <th scope="row">{{ forloop.counter }}</th>-->
+<!--                <td>{{ cit.cartItem_id }}</td>-->
+<!--                <td>{{ cit.cart }}</td>-->
+<!--                <td>{{ cit.product }}</td>-->
+<!--                <td>{{ cit.cartItem_quantity }}</td>-->
+<!--                <td>{{ cit.cartItem_price }}</td>-->
+<!--            </tr>-->
+<!--            {% endfor %}-->
+<!--        </tbody>-->
+<!--    </table>-->
+
+
+
+
+
+
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-3 bg-secondary">asd</div>
+            <div class="col-6 bg-danger">
+
+                <h3> Cart ID: {{ cart_id }} </h3>
+
+                <table class="table">
+                    <tbody>
+                        {% for cit in cartItems %}
+                        <tr>
+                            <td class="container">
+                                <div class="row">
+                                    <div class="col">
+                                        <img src="{{ cit.product.prod_image.url }}" alt="prod-img" style="width:10rem; height:10rem">
+                                    </div>
+                                    <div class="col"> <b>{{ cit.product.prod_name }}</b>
+                                        {{ cit.cartItem_id }}
+                                    </div>
+                                    <div class="col"> <b>{{ cit.product.prod_price }}</b> </div>
+                                    <div class="col"> <b>{{ cit.cartItem_quantity }}</b>
+                                        <a href="{% url 'cartOrderApplication:cartItem_remove' cit.cartItem_id %}" style="text-decoration:none; color:black;">
+                                            <i class="bi bi-trash3-fill" style="font-size: 2rem;"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+
+            </div>
+            <div class="col bg-info">
+                <h3>Cart Subtotal</h3>
+
+                Price: <b> {{ cart.total_price }} </b>
+
+                <br><br><br>
+
+                <form action="{% url 'cartOrderApp:createOrder' cart_id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-lg btn-success">Proceed to Checkout</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+
+{% endblock %}
