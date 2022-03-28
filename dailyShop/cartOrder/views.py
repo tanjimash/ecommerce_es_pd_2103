@@ -17,6 +17,19 @@ SSLCommerz Implementation Ref:    https://www.youtube.com/watch?v=krTt8Xdchow
 
 
 
+
+
+
+
+
+"""
+Problem:  Item is not added inside the 'cartItem' table
+"""
+
+
+
+
+
 def addToCart(request):
     print('Add to cart function is called!')
 
@@ -72,8 +85,16 @@ def cart(request, cart_id):
     cart = Cart.objects.get(cart_id=cart_id)
     cartItems = CartItem.objects.filter(cart=cart)
 
-    for cit in cartItems:
-        print(cit)
+    print('Cart:', cart)
+    print('CartItems:', cartItems)
+
+
+    # for cit in cartItems:
+    #     print(cit)
+
+
+
+    return HttpResponse('Customer Cart page is called!')
 
     context = {
         'title': 'Cart',
@@ -204,6 +225,7 @@ def placeOrder_cod(request, order_id):
         print('Order is placed! (COD). Order ID:', order_id)
         order = Order.objects.get(order_id=order_id)
         order.payment_method = 'COD'
+        order.is_paid = True
         order.save()
         return HttpResponse('Order is placed! (COD)')
 
@@ -290,6 +312,7 @@ def sslc_complete(request, val_id, tran_id):
 
     # modify the 'Order' record
     order.is_paid = True
+    order.payment_method = 'SSLCommerz'
     order.order_id = val_id
     order.transaction_id = tran_id
     order.save()

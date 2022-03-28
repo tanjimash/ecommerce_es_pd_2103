@@ -5,38 +5,58 @@
 {% block content %}
 
 
-<h1> Product Detail Page </h1>
-<h1> Product Id: {{ prod.pk }} </h1>
-<h1> Product Name: {{ prod.prod_name }} </h1>
-<h1> Product Price: {{ prod.prod_price }} </h1>
-<h1> Product Description: {{ prod.prod_desc }} </h1>
+<div class="container-fluid">
+    <div class="row" style="margin-top: 8rem;">
+        <div class="col"></div>
+        <div class="col-8" style="background-color: #C9C9C9;">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <img src="{{ prod.prod_image.url }}" alt="Product Image" class="img-fluid" style="margin-top: .5rem;">
+                    </div>
+                    <div class="col">
+                        <h1 style="font-weight: 600; font-size: 3rem;"> {{ prod.prod_name }} </h1>
+                        <hr>
+                        <h2 style="color: goldenrod;"> ৳ {{ prod.prod_price }} </h2>
 
-<img src="{{ prod.prod_image.url }}" alt="Product Image">
+                        <p> {{ prod.prod_desc }} </p>
+                    </div>
+                    <div class="col">
+                        <form action="{% url 'cartOrderApp:addToCart' %}" method="POST">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <input type="hidden" class="form-control" id="prod_id" name="prod_id"
+                                       value="{{ prod.pk }}">
+                            </div>
+                            <div class="mb-3">
+                                <input type="hidden" class="form-control" id="cart_id" name="cart_id"
+                                       value="{{ cart.cart_id }}">
+                            </div>
+                            <div class="mb-3 d-flex justify-content-center">
+                                <div class="container">
+                                    <div class="row text-center">
+                                        <label for="prod_quantity" class="form-label" style="font-size: 2rem;">Quantity</label>
+                                    </div>
+                                    <div class="row d-flex justify-content-center mt-4">
+                                        <input type="number" class="form-control" id="prod_quantity" name="prod_quantity"
+                                               min="1" max="10" value="1" style="width: 15rem;">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-3 d-flex justify-content-center mt-5">
+                                <button type="submit" class="btn btn-lg p-3 fw-bold" style="background-color: goldenrod;">Add to cart</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
 
-<div class="container" style="margin-bottom:10rem;">
-    <div class="row">
-        <div class="col bg-warning">
-            <form action="{% url 'cartOrderApp:addToCart' %}" method="POST">
-                {% csrf_token %}
-                <h1>Product Cart Form</h1>
-                <div class="mb-3">
-                    <label for="prod_id" class="form-label">Product ID</label>
-                    <input type="text" class="form-control" id="prod_id" name="prod_id" value="{{ prod.pk }}">
-                </div>
-                <div class="mb-3">
-                    <label for="cart_id" class="form-label">Cart ID</label>
-                    <input type="text" class="form-control" id="cart_id" name="cart_id" value="{{ cart.cart_id }}">
-                </div>
-                <div class="mb-3">
-                    <label for="prod_quantity" class="form-label">Quantity</label>
-                    <input type="number" class="form-control" id="prod_quantity" name="prod_quantity" min="1" max="10" value="1">
-                </div>
-                <button type="submit" class="btn btn-primary">Add to cart</button>
-            </form>
         </div>
-        <div class="col bg-info">Empty</div>
+        <div class="col"></div>
     </div>
 </div>
+
+
 
 
 {% endblock %}

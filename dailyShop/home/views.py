@@ -2,8 +2,11 @@ from django.shortcuts import render, redirect
 from .models import *
 from cartOrder.models import *
 from django.contrib.auth.models import User
+from userRegistration.decorators import *
 
 
+
+@stop_unauthenticated_user
 def homepage(request):
     prod = Product.objects.all()
 
@@ -30,7 +33,7 @@ def homepage(request):
     }
     return render(request, 'home/homepage.html', context)
 
-
+@stop_unauthenticated_user
 def prodDetail(request, id, cart_id):
     prod = Product.objects.get(pk=id)
     cart = Cart.objects.get(cart_id=cart_id, is_purchased=False)

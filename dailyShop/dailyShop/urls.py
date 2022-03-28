@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(('home.urls', 'app_name'), namespace='homeApplication')),
     path('cart/', include(('cartOrder.urls', 'app_name'), namespace='cartOrderApplication')),
+    path('auth/', include(('userRegistration.urls', 'app_name'), namespace='userRegApplication')),
 ]
 
 

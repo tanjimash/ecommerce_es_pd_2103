@@ -15,6 +15,9 @@ class Cart(models.Model):
     total_price = models.FloatField(default=0)
     customer = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.cart_id
+
     class Meta():
         verbose_name_plural = 'Cart'
 

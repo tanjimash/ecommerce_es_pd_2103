@@ -2,9 +2,7 @@
 {% include 'base.html' %}
 
 {% block title %}
-
     <title> {{ title }} </title>
-
 {% endblock %}
 
 {% block content %}
@@ -17,16 +15,17 @@
 
             {% for p in prod %}
             <div class="col-3">
-                <div class="card" style="width: 18rem; margin-top:1rem;">
-                    <img src="{{ p.prod_image.url }}" class="card-img-top" alt="Product Image"
-                         style="width:15rem; height:20rem;">
-                    <div class="card-body">
-                        <h3 class="card-title"> {{ p.prod_name }} </h3>
-                        <h5 class="card-title text-danger"> BDT {{ p.prod_price }} </h5>
-                        <p class="card-text"> {{ p.prod_desc | truncatechars:150 }} </p>
-                        <a href="{% url 'homeApplication:prodDetail' p.id cart.cart_id  %}" class="btn btn-primary">View Detail {{ p.id }}</a>
+                <a href="{% url 'homeApplication:prodDetail' p.id cart.cart_id  %}" style="text-decoration: none; color: black;">
+                    <div class="card" style="width: 18rem; margin-top:1rem;">
+                        <img src="{{ p.prod_image.url }}" class="card-img-top" alt="Product Image"
+                             style="width:15rem; height:20rem;">
+                        <div class="card-body">
+                            <h3 class="card-title"> {{ p.prod_name }} </h3>
+                            <h5 class="card-title text-danger"> BDT {{ p.prod_price }} </h5>
+                            <p class="card-text"> {{ p.prod_desc | truncatechars:150 }} </p>
+                        </div>
                     </div>
-                </div>
+                </a>
             </div>
             {% endfor %}
 
